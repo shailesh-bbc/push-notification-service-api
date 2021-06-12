@@ -1,9 +1,9 @@
-import {createUser} from './user';
+import {createUser} from './registerUser';
+import {Request, Response} from 'express';
 
-export const requestHandler = (req, res) => {
+export const requestHandler = (req: Request, res: Response): Response => {
   const {username} = req.body;
   const accessToken = req.headers.authorization;
-
   try {
     const user = createUser(username, accessToken);
     return res.send(user);

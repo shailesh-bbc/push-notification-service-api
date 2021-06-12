@@ -1,8 +1,7 @@
+import {RegisteredUser} from '../types/registerUser';
+const registeredUsers: RegisteredUser[] = [];
 
-const registeredUsers = [];
-
-export const createUser = (username: string, bearerToken: string) => {
-
+export const createUser = (username: string, bearerToken: string): RegisteredUser => {
   if(!isValidUsername(username)) {
     throw new Error("Invalid username");
   }
@@ -29,6 +28,10 @@ export const createUser = (username: string, bearerToken: string) => {
   return newUser;
 } 
 
+export const getRegisteredUsers = (): RegisteredUser[] => {
+  return registeredUsers;
+}
+
 const isValidUsername = (username: string): boolean => {
   if(username) {
     return true;
@@ -45,6 +48,6 @@ const isAccessTokenValid = (accessToken: string): boolean => {
   return false;
 }
 
-const isUserAlreadyRegistered = (username: string) => {
+const isUserAlreadyRegistered = (username: string): boolean => {
   return registeredUsers.some(({username: registeredUser}) => registeredUser === username);
 }
