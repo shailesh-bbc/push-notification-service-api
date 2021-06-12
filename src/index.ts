@@ -1,14 +1,12 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import {requestHandler} from './requestHandler'
 
 const server = express();
 const jsonParser = bodyParser.json();
 
-server.get('/url', jsonParser, function (req, res) {
-  console.log(req.body);
-  res.send(req.body)
-});
+server.post('/user', jsonParser, requestHandler);
 
 server.listen(8080, () => {
-  console.log("Server running on port 8080");
+  console.log('Server running on port 8080');
 });
