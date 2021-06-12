@@ -1,5 +1,5 @@
-import {RegisteredUser} from '../types/registerUser';
-const registeredUsers: RegisteredUser[] = [];
+import {RegisteredUser} from '../types/createUser';
+import {addUser} from '../user/userDatabase';
 
 export const createUser = (username: string, bearerToken: string): RegisteredUser => {
   if(!isValidUsername(username)) {
@@ -8,10 +8,6 @@ export const createUser = (username: string, bearerToken: string): RegisteredUse
 
   if(!isAccessTokenValid(bearerToken)) {
     throw new Error("Invalid access token");
-  }
-
-  if(isUserAlreadyRegistered(username)) {
-    throw new Error("User already exists");
   }
 
   const accessToken = bearerToken.replace("Bearer ", "");
@@ -23,14 +19,14 @@ export const createUser = (username: string, bearerToken: string): RegisteredUse
     "numOfNotificationsPushed": 0
   }
 
-  registeredUsers.push(newUser);
+  try {
+    addUser(newUser);
+  } catch(error) {
+    throw error;
+  }
 
   return newUser;
 } 
-
-export const getRegisteredUsers = (): RegisteredUser[] => {
-  return registeredUsers;
-}
 
 const isValidUsername = (username: string): boolean => {
   if(username) {
@@ -46,8 +42,4 @@ const isAccessTokenValid = (accessToken: string): boolean => {
   }
 
   return false;
-}
-
-const isUserAlreadyRegistered = (username: string): boolean => {
-  return registeredUsers.some(({username: registeredUser}) => registeredUser === username);
 }

@@ -1,7 +1,7 @@
 import express, {Request, Response} from 'express';
 import bodyParser from 'body-parser';
 import {requestHandler} from './user/requestHandler';
-import {getRegisteredUsers} from './user/registerUser';
+import {getRegisteredUsers} from './user/userDatabase';
 
 const server = express();
 const jsonParser = bodyParser.json();

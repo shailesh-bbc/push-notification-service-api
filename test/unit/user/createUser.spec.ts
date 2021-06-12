@@ -1,5 +1,5 @@
 import sinon from 'sinon';
-import {createUser} from '../../../src/user/registerUser';
+import {createUser} from '../../../src/user/createUser';
 import {expect} from 'chai';
 
 const USERNAME = 'test-user';
@@ -34,7 +34,7 @@ describe('User actions', () => {
       expect(result).to.deep.equal(expected);
     });
 
-    it('should create users with same access token', () => {
+    it('should create new user with same access token', () => {
       const expectedUser1 = {
         username: USERNAME,
         accessToken: ACCESS_TOKEN,
@@ -70,12 +70,6 @@ describe('User actions', () => {
 
     it('should not create user if access token is null', () => {
       expect(() => createUser(USERNAME, null)).to.throw('Invalid access token');
-    });
-
-    it('should not create user if username already exists', () => {
-      arraySomeStub.onCall(1).returns(true);
-      createUser(USERNAME, ACCESS_TOKEN);
-      expect(() => createUser(USERNAME, ACCESS_TOKEN)).to.throw('User already exists');
     });
   });
 });

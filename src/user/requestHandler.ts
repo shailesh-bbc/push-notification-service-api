@@ -1,4 +1,4 @@
-import {createUser} from './registerUser';
+import {createUser} from './createUser';
 import {Request, Response} from 'express';
 
 export const requestHandler = (req: Request, res: Response): Response => {
