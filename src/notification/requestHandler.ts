@@ -1,7 +1,19 @@
 import {Request, Response} from 'express';
+import {AxiosResponse} from 'axios';
 import {getUser} from './../user/userDatabase';
 import {sendPushRequest} from './pushBullet';
 import {getRequestType} from './pushNotification';
+import {incrementPushNotification} from '../user/userDatabase';
+
+const PUSH_BULLET_API = 'https://api.pushbullet.com/v2/pushes';
+const PUSH_BULLET_UPLOAD_REQUEST_API = 'https://api.pushbullet.com/v2/upload-request';
+
+const headers = (accessToken) => {
+  return {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${accessToken}`,
+  };
+};
 
 export const requestHandler = async (req: Request, res: Response) => {
   const username = typeof req.query.username === 'string' ? req.query.username : '';
@@ -16,7 +28,12 @@ export const requestHandler = async (req: Request, res: Response) => {
 
     const getRequestBody = getRequestType(body);
 
-    const {data} = await sendPushRequest(accessToken, getRequestBody, username);
+    const {data} = await sendPushRequest(PUSH_BULLET_API, headers(accessToken), getRequestBody).then(
+      (res: AxiosResponse) => {
+        incrementPushNotification(username);
+        return res;
+      },
+    );
 
     return res.send(await getUser(username));
   } catch (error) {
