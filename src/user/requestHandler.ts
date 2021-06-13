@@ -13,4 +13,4 @@ export const requestHandler = (req: Request, res: Response): Response => {
       errorMessage: error.message,
     });
   }
-}
+};

@@ -56,19 +56,19 @@ describe('User actions', () => {
       expect(resultUser2).to.deep.equal(expectedUser2);
     });
 
-    it('should not create user if username is undefined', () => {
+    it('should throw error with message invalid username given undefined username', () => {
       expect(() => createUser(undefined, ACCESS_TOKEN)).to.throw('Invalid username');
     });
 
-    it('should not create user if username is null', () => {
+    it('should throw error with message invalid username given null username', () => {
       expect(() => createUser(null, ACCESS_TOKEN)).to.throw('Invalid username');
     });
 
-    it('should not create user if access token is undefined', () => {
+    it('should throw error with invalid access token given an undefined access token', () => {
       expect(() => createUser(USERNAME, undefined)).to.throw('Invalid access token');
     });
 
-    it('should not create user if access token is null', () => {
+    it('should throw error with invalid access token given an null access token', () => {
       expect(() => createUser(USERNAME, null)).to.throw('Invalid access token');
     });
   });

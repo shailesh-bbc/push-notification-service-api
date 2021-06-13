@@ -1,6 +1,12 @@
 import {expect} from 'chai';
 import {RegisteredUser} from '../../../src/types/createUser';
-import {addUser, getRegisteredUsers, clearRegisteredUsers} from '../../../src/user/userDatabase';
+import {
+  addUser,
+  getRegisteredUsers,
+  clearRegisteredUsers,
+  getUser,
+  incrementPushNotification,
+} from '../../../src/user/userDatabase';
 import sinon from 'sinon';
 
 const sandbox = sinon.createSandbox();
@@ -35,7 +41,7 @@ describe('Store for registered users', () => {
       expect(arrayPushSpy.calledWith(USER)).to.be.equal(true);
     });
 
-    it('should not add user to registeredUser if it exists', () => {
+    it('should throw error if user already exists', () => {
       clearRegisteredUsers();
       addUser(USER);
       expect(arrayPushSpy.callCount).to.be.equal(1);
@@ -44,23 +50,23 @@ describe('Store for registered users', () => {
   });
 
   describe('getRegisteredUsers', () => {
-    it('should return empty array when no users a registered', () => {
+    it('should return empty array when no users a registered', async () => {
       clearRegisteredUsers();
-      const result = getRegisteredUsers();
+      const result = await getRegisteredUsers();
 
       expect(result).to.deep.equal([]);
     });
 
-    it('should return array with single created user', () => {
+    it('should return array with single created user', async () => {
       clearRegisteredUsers();
       addUser(USER);
 
-      const result = getRegisteredUsers();
+      const result = await getRegisteredUsers();
 
       expect(result).to.deep.equal([USER]);
     });
 
-    it('should return array with multiple created user', () => {
+    it('should return array with multiple created user', async () => {
       clearRegisteredUsers();
       addUser(USER);
       addUser({
@@ -69,7 +75,7 @@ describe('Store for registered users', () => {
         creationTime: '11/06/2021T10:00:00',
         numOfNotificationsPushed: 0,
       });
-      const result = getRegisteredUsers();
+      const result = await getRegisteredUsers();
 
       expect(result).to.deep.equal([
         USER,
@@ -80,6 +86,42 @@ describe('Store for registered users', () => {
           numOfNotificationsPushed: 0,
         },
       ]);
+    });
+  });
+
+  describe('getUser', () => {
+    it('should return user given a username', async () => {
+      clearRegisteredUsers();
+      addUser(USER);
+
+      const result = await getUser(USERNAME);
+
+      expect(result).to.deep.equal(USER);
+    });
+
+    it('should throw error if user does not exist', () => {
+      clearRegisteredUsers();
+
+      expect(() => getUser(USERNAME)).to.throw('Could not find user with username test-user');
+    });
+  });
+
+  describe('incrementPushNotification', () => {
+    it('should increment number of pushed notification for a given user', async () => {
+      clearRegisteredUsers();
+      addUser(USER);
+
+      incrementPushNotification(USERNAME);
+
+      const result = await getRegisteredUsers();
+
+      expect(result[0].numOfNotificationsPushed).to.equal(1);
+    });
+
+    it('should throw error if it can not find user', () => {
+      clearRegisteredUsers();
+
+      expect(() => incrementPushNotification(USERNAME)).to.throw(`Could not find user ${USERNAME}`);
     });
   });
 });
