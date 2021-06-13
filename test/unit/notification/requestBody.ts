@@ -4,7 +4,7 @@ import {
   FileRequestBody,
   PushFileRequestBody,
 } from '../../../src/types/pushNotification';
-import {pushRequestBody} from '../../../src/notification/pushNotification';
+import {pushRequestBody} from '../../../src/notification/requestBody';
 import {expect} from 'chai';
 
 const NOTE_REQUEST_BODY: NoteRequestBody = {
@@ -280,6 +280,10 @@ describe('Checks the type of push notification and returns the data to send', ()
 
     it('should return error if no type found', () => {
       expect(() => pushRequestBody({})).to.throw('No push type found');
+    });
+
+    it('should return error if type is invalid', () => {
+      expect(() => pushRequestBody({type: 'test'})).to.throw('Push type is invalid');
     });
   });
 });

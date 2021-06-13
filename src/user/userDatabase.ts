@@ -1,13 +1,6 @@
 import {RegisteredUser} from '../types/createUser';
 
-const registeredUsers: RegisteredUser[] = [
-  {
-    username: 'test',
-    accessToken: 'o.dluqWtxxXHF7QlaBTbmiYdqY4KfCImLi',
-    creationTime: '2021-06-12T20:34:40.201Z',
-    numOfNotificationsPushed: 0,
-  },
-];
+const registeredUsers: RegisteredUser[] = [];
 
 export const getRegisteredUsers = (): Promise<RegisteredUser[]> => {
   return Promise.resolve(registeredUsers);

@@ -27,9 +27,4 @@ export type PushFileRequestBody = {
   body?: string;
 };
 
-export type PushUploadRequestBody = {
-  file_type?: string;
-  file_name?: string;
-};
-
-export type RequestData = NoteRequestBody | NoteRequestBody | PushFileRequestBody;
+export type RequestData = NoteRequestBody | LinkRequestBody | PushFileRequestBody;

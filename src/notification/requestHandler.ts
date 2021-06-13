@@ -5,7 +5,7 @@ import {Request, Response} from 'express';
 import {AxiosResponse} from 'axios';
 import {getUser} from './../user/userDatabase';
 import {sendPushRequest} from './pushBullet';
-import {pushRequestBody} from './pushNotification';
+import {pushRequestBody} from './requestBody';
 import {incrementPushNotification} from '../user/userDatabase';
 
 const PUSH_BULLET_API = 'https://api.pushbullet.com/v2/pushes';
