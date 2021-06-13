@@ -1,4 +1,4 @@
-import {RequestData, NoteRequestData} from '../types/pushNotification';
+import {RequestData, NoteRequestData, LinkRequestData} from '../types/pushNotification';
 import _ from 'lodash';
 
 export const getRequestType = (requestBody): RequestData => {
@@ -19,5 +19,21 @@ export const getRequestType = (requestBody): RequestData => {
     ) as NoteRequestData;
 
     return noteRequestBody;
+  }
+
+  if (requestBody.type === 'link') {
+    const {type, title, body, url}: LinkRequestData = requestBody;
+
+    const linkRequestBody = _.pickBy(
+      {
+        type,
+        title,
+        body,
+        url,
+      },
+      _.identity,
+    ) as LinkRequestData;
+
+    return linkRequestBody;
   }
 };

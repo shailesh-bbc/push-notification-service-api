@@ -4,4 +4,11 @@ export type NoteRequestData = {
   body?: string;
 };
 
-export type RequestData = NoteRequestData;
+export type LinkRequestData = {
+  type: string;
+  title?: string;
+  body?: string;
+  url?: string;
+};
+
+export type RequestData = NoteRequestData | LinkRequestData;
