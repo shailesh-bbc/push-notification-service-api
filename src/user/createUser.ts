@@ -19,11 +19,7 @@ export const createUser = (username: string, bearerToken: string): RegisteredUse
     numOfNotificationsPushed: 0,
   };
 
-  try {
-    addUser(newUser);
-  } catch (error) {
-    throw error;
-  }
+  addUser(newUser);
 
   return newUser;
 };

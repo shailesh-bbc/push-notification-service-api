@@ -6,7 +6,7 @@ export const getRegisteredUsers = (): Promise<RegisteredUser[]> => {
   return Promise.resolve(registeredUsers);
 };
 
-export const addUser = (user: RegisteredUser) => {
+export const addUser = (user: RegisteredUser): void => {
   if (isUserAlreadyRegistered(user)) {
     throw new Error('User already exists');
   }
