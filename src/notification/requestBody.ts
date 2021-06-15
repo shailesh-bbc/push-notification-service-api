@@ -1,4 +1,4 @@
-import {RequestData, NoteRequestBody, LinkRequestBody, FileRequestBody} from '../types/pushNotification';
+import {RequestData, NoteRequestBody, LinkRequestBody, FileRequestBody} from '../types/requestBody';
 import _ from 'lodash';
 
 export const pushRequestBody = (requestBody): RequestData => {
