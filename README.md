@@ -76,9 +76,9 @@ An example request can be found below.
     curl --location --request POST 'localhost:8080/push?username=test' \
     --header 'Content-Type: application/json' \
     --data-raw '{
-    "type": "file",
-    "body": "mybody",
-    "fileName": "myfilename.jpeg",
-    "fileType": "image/jpeg",
-    "fileUrl": "path/to/file"
-}'
+      "type": "file",
+      "body": "mybody",
+      "fileName": "myfilename.jpeg",
+      "fileType": "image/jpeg",
+      "fileUrl": "path/to/file"
+    }'
